@@ -1,10 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 
 function Chat() {
   return (
     <ChatContainer>
-      <h1>Chat room</h1>
+      <Header>
+        <HeaderLeft>
+          <h4>
+            <strong>#Room-name</strong>
+          </h4>
+          <StarBorderOutlinedIcon />
+        </HeaderLeft>
+
+        <HeaderRight>
+          <InfoOutlinedIcon /> Details
+        </HeaderRight>
+      </Header>
     </ChatContainer>
   );
 }
@@ -16,4 +29,19 @@ const ChatContainer = styled.div`
   flex: 0.7;
   flex-grow: 1;
   overflow-y: scroll;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid lightgray;
+`;
+
+const HeaderLeft = styled.div`
+  display: flex;
+`;
+
+const HeaderRight = styled.div`
+  display: flex;
 `;
