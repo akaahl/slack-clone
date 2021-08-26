@@ -1,23 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import ChatInput from "./ChatInput/ChatInput";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 
 function Chat() {
   return (
     <ChatContainer>
-      <Header>
-        <HeaderLeft>
-          <h4>
-            <strong>#Room-name</strong>
-          </h4>
-          <StarBorderOutlinedIcon />
-        </HeaderLeft>
+      <>
+        <Header>
+          <HeaderLeft>
+            <h4>
+              <strong>#Room-name</strong>
+            </h4>
+            <StarBorderOutlinedIcon />
+          </HeaderLeft>
 
-        <HeaderRight>
-          <InfoOutlinedIcon /> Details
-        </HeaderRight>
-      </Header>
+          <HeaderRight>
+            <p>
+              <InfoOutlinedIcon /> <span>Details</span>
+            </p>
+          </HeaderRight>
+        </Header>
+
+        <ChatMessages></ChatMessages>
+
+        <ChatInput />
+      </>
     </ChatContainer>
   );
 }
@@ -40,8 +49,33 @@ const Header = styled.div`
 
 const HeaderLeft = styled.div`
   display: flex;
+  align-items: center;
+
+  > h4 {
+    display: flex;
+    text-transform: lowercase;
+    margin-right: 10px;
+  }
+
+  > h4 > .MuiSvgIcon-root {
+    margin-left: 10px;
+    font-size: 18px;
+  }
 `;
 
 const HeaderRight = styled.div`
   display: flex;
+
+  > p {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  > p > .MuiSvgIcon-root {
+    margin-right: 10px !important;
+    font-size: 16px;
+  }
 `;
+
+const ChatMessages = styled.div``;
