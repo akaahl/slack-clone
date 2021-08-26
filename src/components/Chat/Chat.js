@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import ChatInput from "./ChatInput/ChatInput";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
@@ -10,12 +10,13 @@ import { db } from "../../firebase/firebase";
 import Message from "./Message";
 
 function Chat() {
+  const chatRef = useRef(null);
   const roomId = useSelector(selectRoom);
   const [roomDetails] = useDocument(
     roomId && db.collection("rooms").doc(roomId)
   );
 
-  const [roomMessages] = useCollection(
+  const [roomMessages, loading] = useCollection(
     roomId &&
       db
         .collection("rooms")
@@ -24,45 +25,55 @@ function Chat() {
         .orderBy("timestamp", "asc")
   );
 
-  console.log(roomDetails?.data());
-  console.log(roomMessages);
+  useEffect(() => {
+    chatRef?.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [roomId, loading, roomMessages]);
 
   return (
     <ChatContainer>
-      <>
-        <Header>
-          <HeaderLeft>
-            <h4>
-              <strong>#{roomDetails?.data().name}</strong>
-            </h4>
-            <StarBorderOutlinedIcon />
-          </HeaderLeft>
+      {roomDetails && roomMessages && (
+        <>
+          <Header>
+            <HeaderLeft>
+              <h4>
+                <strong>#{roomDetails?.data().name}</strong>
+              </h4>
+              <StarBorderOutlinedIcon />
+            </HeaderLeft>
 
-          <HeaderRight>
-            <p>
-              <InfoOutlinedIcon /> <span>Details</span>
-            </p>
-          </HeaderRight>
-        </Header>
+            <HeaderRight>
+              <p>
+                <InfoOutlinedIcon /> <span>Details</span>
+              </p>
+            </HeaderRight>
+          </Header>
 
-        <ChatMessages>
-          {roomMessages?.docs.map((doc) => {
-            const { user, userImage, message, timestamp } = doc.data();
+          <ChatMessages>
+            {roomMessages?.docs.map((doc) => {
+              const { user, userImage, message, timestamp } = doc.data();
 
-            return (
-              <Message
-                key={doc.id}
-                user={user}
-                userImage={userImage}
-                message={message}
-                timestamp={timestamp}
-              />
-            );
-          })}
-        </ChatMessages>
+              return (
+                <Message
+                  key={doc.id}
+                  user={user}
+                  userImage={userImage}
+                  message={message}
+                  timestamp={timestamp}
+                />
+              );
+            })}
 
-        <ChatInput channelId={roomId} channelName={roomDetails?.data().name} />
-      </>
+            <ChatBottom ref={chatRef} />
+          </ChatMessages>
+
+          <ChatInput
+            channelId={roomId}
+            channelName={roomDetails?.data().name}
+          />
+        </>
+      )}
     </ChatContainer>
   );
 }
@@ -115,3 +126,5 @@ const HeaderRight = styled.div`
 `;
 
 const ChatMessages = styled.div``;
+
+const ChatBottom = styled.div``;
