@@ -1,6 +1,6 @@
 ## Getting Started
 
-Demo can be found [here]()
+Demo can be found [here](https://slack-clone-phi-silk.vercel.app/)
 
 Authentication is provided by Firebase, you may use your email for signup.
 
