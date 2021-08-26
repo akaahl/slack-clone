@@ -127,4 +127,6 @@ const HeaderRight = styled.div`
 
 const ChatMessages = styled.div``;
 
-const ChatBottom = styled.div``;
+const ChatBottom = styled.div`
+  margin-top: 100px;
+`;
