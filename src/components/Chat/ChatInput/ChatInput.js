@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 import { db } from "../../../firebase/firebase";
 import firebase from "firebase";
 
-function ChatInput({ channelId }) {
+function ChatInput({ channelId, channelName }) {
   const inputRef = useRef(null);
 
   const sendMessage = (e) => {
@@ -28,7 +28,11 @@ function ChatInput({ channelId }) {
   return (
     <ChatInputContainer>
       <form>
-        <input type="text" ref={inputRef} placeholder={`Message #ROOM`} />
+        <input
+          type="text"
+          ref={inputRef}
+          placeholder={`Message #${channelName}`}
+        />
 
         <Button type="submit" hidden onClick={sendMessage}>
           SEND
